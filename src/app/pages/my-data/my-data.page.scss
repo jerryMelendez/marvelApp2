@@ -1,0 +1,21 @@
+.user-img{
+    min-width: 200px;
+    min-height: 200px;
+}
+
+input#btn_file{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.position_button{
+    position: absolute; 
+    bottom: 0px; 
+    right: 0px;
+}

@@ -1,0 +1,24 @@
+.size-img{
+    min-height: 350px;
+}
+
+ion-card{
+    border-radius: 10px;
+}
+
+.div-title{
+    position: absolute; 
+    bottom: 0px;
+    z-index: 1;
+    background: linear-gradient(0deg, rgb(248, 120, 0) 0%, rgb(241, 154, 39) 34%, rgb(255, 196, 108) 75%, rgba(0,212,255,0) 100%);
+    width: 100%;
+    height: 20%;
+}
+
+.category-title{
+    text-align: center;
+    color: white;
+    line-height: 85px;
+    font-size: 25px;
+    width: 100%;
+}

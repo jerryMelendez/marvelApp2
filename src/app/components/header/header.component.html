@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar color="header">
+    <ion-buttons slot="start">
+      <ion-menu-button color="white"></ion-menu-button>
+      <ion-back-button *ngIf="title !== 'Home'" color="white" defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title color="white">{{ title }}</ion-title>
+    <ion-buttons slot="end" *ngIf="title === 'Characters' || title === 'Comics'">
+      <ion-button shape="round" style="border-radius: 100%;" (click)="seeFavorites()">
+        <ion-icon size="large" color="white" slot="icon-only" name="heart"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

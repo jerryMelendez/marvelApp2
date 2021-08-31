@@ -1,0 +1,31 @@
+<ion-card class="ion-no-margin ion-no-padding" style="min-height: 250px">
+  <ion-buttons style="position: absolute; top: 0px; right: 0px; z-index:2;">
+    <ion-button *ngIf="!flagFavorite" shape="round" (click)="addFavorite()">
+      <ion-icon color="danger" slot="icon-only" name="heart-outline"></ion-icon>
+    </ion-button>
+    <ion-button *ngIf="flagFavorite" shape="round" (click)="removeFavorite()">
+      <ion-icon color="danger" slot="icon-only" name="heart"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-card-content class="ion-no-margin ion-no-padding">
+    <ion-grid class="ion-no-margin ion-no-padding">
+      <ion-row class="ion-no-margin ion-no-padding">
+        <ion-col size="12">
+          <img [src]="character.thumbnail ? (character.thumbnail.path + '.' + character.thumbnail.extension).replace('http', 'https') : character.photoUrl.replace('http', 'https')" [alt]="character.name" style="min-height: 220px; max-height: 220px;">
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <p class="nameCharacter">
+            {{character.name}}
+          </p>
+          <ion-buttons class="button">
+            <ion-button shape="round" (click)="seeDetail()">
+              <ion-icon size="small" slot="icon-only" name="eye" color="white"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>

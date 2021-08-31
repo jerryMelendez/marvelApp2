@@ -1,0 +1,17 @@
+<ion-header>
+  <app-header [title]="'Comics'" [identity]="identity" (typeChanged)="onTypeEmittedHeader($event)"></app-header>
+  <ion-toolbar>
+      <app-panel-search (typeChanged)="onTypeEmitted($event)" [categoryName]="'comics'"></app-panel-search>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+      <ion-row>
+          <ion-col size="6" *ngFor="let item of arrayComics">
+              <app-panel-comic [comic]="item"
+                                  [identity]="identity"  
+              ></app-panel-comic>
+          </ion-col>
+      </ion-row>
+  </ion-grid>
+</ion-content>
