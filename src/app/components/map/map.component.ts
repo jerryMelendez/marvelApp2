@@ -15,10 +15,8 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
     // Componente que rendirisa el mapa
-    console.log(mapboxgl);
     setTimeout(() => {
-      console.log(mapboxgl);
-      mapboxgl.accessToken = 'pk.eyJ1IjoiamVycnltZWxlbmRleiIsImEiOiJja3NnejNrcTAxcGRlMzBuNXd3ZnBobXBsIn0.hSWuGM4TfJrxrXP25wUpHA';
+      mapboxgl.accessToken = 'pk.eyJ1IjoiamVycnltZWxlbmRlejk3IiwiYSI6ImNrdDBteXZ0ODA2ajIydXA5bGUyeHJlNzUifQ.AU_DkU6vX-QGJWCenLYfBQ';
         const map = new mapboxgl.Map({
         container: this.mapa.nativeElement,
         style: 'mapbox://styles/mapbox/streets-v11',

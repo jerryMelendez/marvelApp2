@@ -1,9 +1,17 @@
 <ion-header>
+  <app-header [title]="'Events'"></app-header>
   <ion-toolbar>
-    <ion-title>events</ion-title>
+      <app-panel-search (typeChanged)="onTypeEmitted($event)" [categoryName]="'Events'"></app-panel-search>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-
+  
+  <ion-grid>
+      <ion-row>
+          <ion-col size="6" *ngFor="let item of arrayEvents">
+              <app-panel-events [event]="item"
+              ></app-panel-events>
+          </ion-col>
+      </ion-row>
+  </ion-grid>
 </ion-content>
