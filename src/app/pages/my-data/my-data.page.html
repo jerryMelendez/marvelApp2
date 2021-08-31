@@ -5,10 +5,11 @@
     <ion-row>
       <ion-col size="6" offset="3">
         <ion-avatar [style]="'width: '+width+'px; height: '+width+'px;'">
-          <img [src]="identity.fotourl" alt="user">
+          <img alt="user" id="imagenPrevisualizacion">
           <!-- <img *ngIf="platform.is('mobileweb')" [src]="identity.fotourl" alt="user"> -->
           <ion-buttons>
-            <ion-button (click)="tomarFoto()" 
+            <ion-button *ngIf="platform.is('capacitor')" 
+                        (click)="tomarFoto()" 
                         class="position_button"
                         shape="round" 
                         fill="solid" 
@@ -16,18 +17,41 @@
               <ion-icon name="camera-outline" slot="icon-only"></ion-icon>
             </ion-button>
 
-            <!-- <ion-button (ionChange)="subirFoto($event)" 
-                        *ngIf="platform.is('mobileweb')"
+            <ion-button color="orden" 
+                        (change)="subirFoto($event)"
+                        *ngIf="!platform.is('capacitor')"
                         class="position_button"
-                        shape="round" 
-                        fill="solid" 
+                        shape="round"
+                        fill="solid"
                         color="primary">
-              <ion-icon name="camera-outline" slot="icon-only"></ion-icon>
+              <ion-icon slot="icon-only" name="camera-outline"></ion-icon>
               <input type="file" id="btn_file" accept="image/*" name="foto">
-            </ion-button> -->
+            </ion-button>
             
           </ion-buttons>
         </ion-avatar>
+        <!-- <script>
+          const $seleccionArchivos = document.querySelector("#btn_file"),
+          $imagenPrevisualizacion = document.querySelector("#imagenPrevisualizacion");
+
+        // Escuchar cuando cambie
+        $seleccionArchivos.addEventListener('change', () => {
+          console.log('change');
+          // Los archivos seleccionados, pueden ser muchos o uno
+          const archivos = $seleccionArchivos.files;
+          // Si no hay archivos salimos de la función y quitamos la imagen
+          if (!archivos || !archivos.length) {
+            $imagenPrevisualizacion.src = "";
+            return;
+          }
+          // Ahora tomamos el primer archivo, el cual vamos a previsualizar
+          const primerArchivo = archivos[0];
+          // Lo convertimos a un objeto de tipo objectURL
+          const objectURL = URL.createObjectURL(primerArchivo);
+          // Y a la fuente de la imagen le ponemos el objectURL
+          $imagenPrevisualizacion.src = objectURL;
+        });
+        </script> -->
       </ion-col>
     </ion-row>
     <ion-row style="padding-top: 15%;">

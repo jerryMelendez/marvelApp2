@@ -18,10 +18,11 @@ export class MyDataPage implements OnInit {
   public photoUrl: string = '';
   public identity: any = {};
   public image: SafeResourceUrl;
-  public lat: number;
-  public lng: number;
-  ;
-  selectedFile = null;
+  public lat: number = 0;
+  public lng: number = 0;
+  selectedFile: any = {};
+  public fotourl = '';
+
   constructor(
     private userService: UserService,
     private alertService: AlertService,
@@ -29,7 +30,8 @@ export class MyDataPage implements OnInit {
     private geoLocation: Geolocation,
     private camera: Camera,
     private sanitizer: DomSanitizer,
-  ) { this.getIdentity(); 
+  ) { 
+    this.getIdentity();
     this.getLocation();}
 
   ngOnInit() {
@@ -41,12 +43,14 @@ export class MyDataPage implements OnInit {
 
       this.lat = resp.coords.latitude;
       this.lng = resp.coords.longitude;
+      console.log([this.lat, this.lng]);
      }).catch((error) => {
      });
   }
 
   async getIdentity()
   {
+    console.log('getidentity');
     this.identity = await this.userService.getIdentity();
     this.photoUrl = this.identity.foto !== '' ? this.identity.foto : this.identity.fotourl;
   }
@@ -70,5 +74,30 @@ export class MyDataPage implements OnInit {
     }, (err) => {
      // Handle error
     });
+  }
+
+  subirFoto( event: any ): void
+  {
+    console.log('Selected File');
+    this.selectedFile = event.target.files[0];
+    // console.log(URL.createObjectURL(this.selectedFile));
+    this.fotourl=URL.createObjectURL(this.selectedFile);
+    
+    // this.usuarioService.subirImagen(this.selectedFile, this.token.value).subscribe(
+    //   response => {
+    //     if (response.image)
+    //     {
+    //       this.alertService.stopLoading(true);
+    //       this.usuario.foto = response.image;
+    //       this.alertService.alertaInformativa('Imagen añadida correctamente');
+    //     } else {
+    //       this.alertService.stopLoading(true);
+    //       this.alertService.alertaInformativa(response.message);
+    //     }
+    //   }, error => {
+    //     this.alertService.stopLoading(true);
+    //     this.alertService.alertaInformativa('Error: formato de imagen no soportado');
+    //   }
+    // );
   }
 }
