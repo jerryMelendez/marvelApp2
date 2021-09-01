@@ -3,7 +3,7 @@ import { Storage } from '@capacitor/storage';
 // import { AngularFireAuth } from '@angular/fire/auth';
 // import * as firebase from 'firebase';
 import { NavController } from '@ionic/angular';
-// import { AngularFireStorage } from '@angular/fire/storage';
+import { Firestore } from '@angular/fire/firestore';
 import { finalize } from 'rxjs/operators';
 
 // const { Storage } = Plugins;
@@ -15,7 +15,7 @@ export class UserService {
   constructor(
     // private afsAuth: AngularFireAuth,
     private navCtrl: NavController,
-    // private storage: AngularFireStorage
+    private storage: Firestore
   ) { }
 
   async getIdentity()
@@ -40,6 +40,34 @@ export class UserService {
     }
   }
 
+  async comprobarDatosInvitado() // Comprobar si existen datos de invitado
+  {
+    // if (myuid.value !== null)
+    // {
+    const users = await Storage.get({ key: 'users' });
+
+    const arrayUsers: any[] = JSON.parse(users.value);
+
+    if (arrayUsers !== null)
+    {
+      const identity = arrayUsers.find(e => e.uid === '17GEtwUqJapXiWbz69YaLffOHEs5');
+  
+      if (identity)
+      {
+        return identity;
+      }
+      else
+      {
+        return null;
+      }
+    }
+    else
+    {
+      return null;
+    }
+
+  }
+
   setIdentity(user)
   {
     // Creamos un array en el local storage de todos los usuarios que se han registrado en el dipositivo
@@ -50,14 +78,12 @@ export class UserService {
       // Verificar si existe un objeto guardado
       if ( data )
       {
-        data.push(user);
-        // filtramos el array para que no hallan usuarios repetidos
-        const hash = {};
-        data = data.filter(current => {
-          const exists = !hash[current.uid];
-          hash[current.uid] = true;
-          return exists;
-        });
+        const index = data.findIndex(e => e.uid === user.uid); // Buscará el usuario a editar
+
+        if (index >= 0) 
+        {
+          data[index] = user;
+        }
         // Cargamos el array devuelta al local storage
         Storage.set({ key, value: JSON.stringify(data) });
       }

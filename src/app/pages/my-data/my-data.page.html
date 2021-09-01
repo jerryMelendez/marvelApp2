@@ -5,7 +5,7 @@
     <ion-row>
       <ion-col size="6" offset="3">
         <ion-avatar [style]="'width: '+width+'px; height: '+width+'px;'">
-          <img alt="user" id="imagenPrevisualizacion">
+          <img *ngIf="identity" [src]="identity.fotourl" alt="user" id="imagenPrevisualizacion">
           <!-- <img *ngIf="platform.is('mobileweb')" [src]="identity.fotourl" alt="user"> -->
           <ion-buttons>
             <ion-button *ngIf="platform.is('capacitor')" 

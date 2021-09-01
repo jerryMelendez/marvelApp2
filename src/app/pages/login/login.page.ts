@@ -17,7 +17,7 @@ export class LoginPage implements OnInit {
   constructor(
     private userService: UserService,
     private alertService: AlertService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
   ) { }
 
   ngOnInit() {
@@ -61,21 +61,34 @@ export class LoginPage implements OnInit {
   }
 
   // Entrar como un usuario invitado y crear las credenciales de este
-  loginAsGuest()
+  async loginAsGuest()
   {
-    const iden = {
-      auth: 'guest',
-      displayName: 'guest user',
-      email: '',
-      fotourl: '../../../assets/images/user.png',
-      foto: '',
-      nick: 'guestU',
-      uid: '17GEtwUqJapXiWbz69YaLffOHEs5'
-    }
-    this.userService.setIdentity(iden);
-    this.navCtrl.navigateForward('/home');
+    const identity = await this.userService.comprobarDatosInvitado();
+
+    if (identity !== null)
+    {
+      this.userService.setIdentity(identity);
+      this.navCtrl.navigateForward('/home');
       setTimeout(() => {
         location.reload();
       }, 500);
+    }
+    else
+    {
+      const iden = {
+        auth: 'guest',
+        displayName: 'guest user',
+        email: '',
+        fotourl: '../../../assets/images/user.png',
+        foto: '',
+        nick: 'guestU',
+        uid: '17GEtwUqJapXiWbz69YaLffOHEs5'
+      }
+      this.userService.setIdentity(iden);
+      this.navCtrl.navigateForward('/home');
+        setTimeout(() => {
+          location.reload();
+        }, 500);
+    }
   }
 }

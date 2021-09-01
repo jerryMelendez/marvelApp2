@@ -21,7 +21,7 @@ export class MyDataPage implements OnInit {
   public lat: number = 0;
   public lng: number = 0;
   selectedFile: any = {};
-  public fotourl = '';
+  public fotourl: any;
 
   constructor(
     private userService: UserService,
@@ -80,24 +80,13 @@ export class MyDataPage implements OnInit {
   {
     console.log('Selected File');
     this.selectedFile = event.target.files[0];
-    // console.log(URL.createObjectURL(this.selectedFile));
-    this.fotourl=URL.createObjectURL(this.selectedFile);
-    
-    // this.usuarioService.subirImagen(this.selectedFile, this.token.value).subscribe(
-    //   response => {
-    //     if (response.image)
-    //     {
-    //       this.alertService.stopLoading(true);
-    //       this.usuario.foto = response.image;
-    //       this.alertService.alertaInformativa('Imagen añadida correctamente');
-    //     } else {
-    //       this.alertService.stopLoading(true);
-    //       this.alertService.alertaInformativa(response.message);
-    //     }
-    //   }, error => {
-    //     this.alertService.stopLoading(true);
-    //     this.alertService.alertaInformativa('Error: formato de imagen no soportado');
-    //   }
-    // );
+    var reader = new FileReader();
+    reader.readAsDataURL(this.selectedFile); 
+    reader.onload = (_event) => { 
+      this.fotourl = reader.result;
+      this.identity.fotourl = reader.result;
+      this.userService.setIdentity(this.identity);
+    }
+
   }
 }
