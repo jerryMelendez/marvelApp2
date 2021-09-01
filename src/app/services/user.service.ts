@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
-import { Storage } from '@capacitor/storage';
 // import { AngularFireAuth } from '@angular/fire/auth';
 // import * as firebase from 'firebase';
+// import { Firestore } from '@angular/fire/firestore';
+// import { finalize } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { Storage } from '@capacitor/storage';
 import { NavController } from '@ionic/angular';
-import { Firestore } from '@angular/fire/firestore';
-import { finalize } from 'rxjs/operators';
+import { SocialAuthService } from "angularx-social-login";
+import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
 
 // const { Storage } = Plugins;
 @Injectable({
@@ -14,8 +16,9 @@ export class UserService {
 
   constructor(
     // private afsAuth: AngularFireAuth,
+    // public afsAuth: AngularFireAuth
     private navCtrl: NavController,
-    private storage: Firestore
+    private authService: SocialAuthService
   ) { }
 
   async getIdentity()
@@ -68,7 +71,7 @@ export class UserService {
 
   }
 
-  setIdentity(user)
+  setIdentity(user, bandEdit = false)
   {
     // Creamos un array en el local storage de todos los usuarios que se han registrado en el dipositivo
     const key = 'users';
@@ -82,7 +85,14 @@ export class UserService {
 
         if (index >= 0) 
         {
-          data[index] = user;
+          if (bandEdit)
+          {
+            data[index] = user;
+          }
+        }
+        else
+        {
+          data.push(user);
         }
         // Cargamos el array devuelta al local storage
         Storage.set({ key, value: JSON.stringify(data) });
@@ -118,11 +128,15 @@ export class UserService {
   }
 
   loginGoogleUser() {
+    console.log('logingoogle');
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
     // return this.afsAuth.signInWithPopup(new firebase.default.auth.GoogleAuthProvider())
     //         .then(credential => this.updateUserData(credential.user) );
   }
 
   loginFacebookUser() {
+    console.log('loginfacebook');
+    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
     // return this.afsAuth.signInWithPopup(new firebase.default.auth.FacebookAuthProvider())
     //       .then(credential => this.updateUserData(credential.user) );
   }

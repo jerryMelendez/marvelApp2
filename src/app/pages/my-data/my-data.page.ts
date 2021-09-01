@@ -85,7 +85,7 @@ export class MyDataPage implements OnInit {
     reader.onload = (_event) => { 
       this.fotourl = reader.result;
       this.identity.fotourl = reader.result;
-      this.userService.setIdentity(this.identity);
+      this.userService.setIdentity(this.identity, true);
     }
 
   }
